@@ -7,9 +7,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,5 +27,13 @@ public class FooControllerTest {
         ResponseEntity<String> responseEntity = fooController.getFooResponse();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("foo", responseEntity.getBody());
+    }
+
+    @Test
+    void getFooResponse_failedCall() {
+        when(fooService.fetchFoo()).thenThrow(RuntimeException.class);
+        ResponseEntity<String> responseEntity = fooController.getFooResponse();
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
+        assertNotEquals("foo", responseEntity.getBody());
     }
 }

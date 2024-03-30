@@ -17,8 +17,8 @@ public class FooController {
     @GetMapping
     public ResponseEntity<String> getFooResponse() {
         try {
-            return new ResponseEntity<>(fooService.fetchFoo(), HttpStatus.OK  );
-        } catch (Exception e){
+            return new ResponseEntity<>(fooService.fetchFoo(), HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>("Unable to fetch foo.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
