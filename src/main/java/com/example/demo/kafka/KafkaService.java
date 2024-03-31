@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaService {
 
+    private final KafkaTemplate<String, String> kafkaTemplate;
     @Autowired
     SpamRepository spamRepository;
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
     public KafkaService(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
+
     public void publishSpamMessage(String message) {
         log.info("Received request to publish message to Kafka topic: {}", message);
         try {
