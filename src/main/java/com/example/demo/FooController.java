@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,5 +23,12 @@ public class FooController {
         } catch (Exception e) {
             return new ResponseEntity<>("Unable to fetch foo.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping
+    @RequestMapping("/spam")
+    public ResponseEntity<HttpStatus> sendSpamMessage(@RequestBody SpamRequest spamRequest) {
+        fooService.sendSpam(spamRequest.getMessage());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
